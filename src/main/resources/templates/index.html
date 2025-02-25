@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Planner Project - Home</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { margin-bottom: 20px; }
+        input { margin: 5px 0; padding: 8px; width: 250px; }
+        button { padding: 8px 16px; }
+    </style>
+</head>
+<body>
+<h1>Planner Project</h1>
+
+<div th:if="${isSignIn}">
+    <p th:text="${userName + '님 환영합니다!'}">사용자 이름</p>
+    <button id="logoutButton">Logout</button>
+</div>
+
+
+
+
+<!-- 로그인 상태에 따른 화면 분기 -->
+<div th:if="${isSignIn}">
+    <p>환영합니다! 이미 로그인 되어 있습니다.</p>
+    <form id="logoutForm">
+        <button type="button" onclick="logout()">Logout</button>
+    </form>
+</div>
+
+<div th:if="${!isSignIn}">
+    <!-- 로그인 폼 -->
+    <section>
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" id="loginEmail" name="email" placeholder="Email" required />
+            <br/>
+            <input type="password" id="loginPassword" name="password" placeholder="Password" required />
+            <br/>
+            <button type="button" onclick="login()">Login</button>
+        </form>
+    </section>
+
+    <!-- 회원가입 폼 -->
+    <section>
+        <h2>Sign Up</h2>
+        <form id="signupForm">
+            <input type="text" id="signupName" name="name" placeholder="Name" required />
+            <br/>
+            <input type="email" id="signupEmail" name="email" placeholder="Email" required />
+            <br/>
+            <input type="password" id="signupPassword" name="password" placeholder="Password" required />
+            <br/>
+            <input type="date" id="signupBirthday" name="birthday" placeholder="Birthday" required />
+            <br/>
+            <button type="button" onclick="signup()">Sign Up</button>
+        </form>
+    </section>
+</div>
+
+<script>
+    // 로그인 요청 함수
+    function login() {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        }).then(response => {
+            if (response.ok) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const redirectUrl = urlParams.get("redirect") || "/schedules/view";
+                window.location.href = redirectUrl; // 로그인 후 자동 이동
+            } else {
+                alert('로그인에 실패했습니다.');
+            }
+        }).catch(error => {
+            console.error('Error during login:', error);
+        });
+    }
+
+    // 회원가입 요청 함수
+    function signup() {
+        const name = document.getElementById('signupName').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+        const birthday = document.getElementById('signupBirthday').value;
+        fetch('/api/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, email, password, birthday })
+        }).then(response => {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                alert('회원가입에 실패했습니다.');
+            }
+        }).catch(error => {
+            console.error('Error during signup:', error);
+        });
+    }
+
+    // 로그아웃 요청 함수
+    function logout() {
+        fetch('/api/logout', {
+            method: 'POST'  // GET → POST 변경
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = "/";  // 로그아웃 후 메인 페이지로 이동
+            } else {
+                alert('로그아웃 실패!');
+            }
+        }).catch(error => {
+            console.error('Error during logout:', error);
+        });
+    }
+
+</script>
+</body>
+</html>

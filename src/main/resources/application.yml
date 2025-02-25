@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    default: dev
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+  web:
+    resources:
+      cache:
+        period: 0
+
+  datasource:
+    url: jdbc:mysql://localhost:3308/planner_system?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ""
+  jpa:
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update

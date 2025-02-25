@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.3'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.nmuud.zero'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring Boot 웹 애플리케이션 (Spring MVC)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Lombok (자동 코드 생성)
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Spring Data JPA (ORM + DB 연동)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // MySQL 데이터베이스 드라이버
+    implementation 'mysql:mysql-connector-java:8.0.33'
+
+    // 비밀번호 암호화 라이브러리 (BCrypt)
+    implementation 'org.mindrot:jbcrypt:0.3m'
+
+    // Spring Boot 유효성 검사 (Validation)
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Thymeleaf 템플릿 엔진 (HTML 렌더링)
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    // 테스트 관련 라이브러리 (JUnit + Spring Boot Test)
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
