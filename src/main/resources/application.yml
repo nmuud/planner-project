@@ -10,10 +10,11 @@ spring:
         period: 0
 
   datasource:
-    url: jdbc:mysql://localhost:3308/planner_system?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    url: ${SPRING_DATASOURCE_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: ""
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
   jpa:
     open-in-view: false
     show-sql: true
