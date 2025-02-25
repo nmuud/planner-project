@@ -10,7 +10,7 @@ spring:
         period: 0
 
   datasource:
-    url: jdbc:mysql://${RAILWAY_PRIVATE_DOMAIN}:3306/${MYSQL_DATABASE}?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://${MYSQLUSER}:${MYSQL_ROOT_PASSWORD}@switchyard.proxy.rlwy.net:58398/${MYSQL_DATABASE}?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${MYSQLUSER}
     password: ${MYSQL_ROOT_PASSWORD}
