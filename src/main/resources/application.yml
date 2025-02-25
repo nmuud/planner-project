@@ -10,10 +10,10 @@ spring:
         period: 0
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
+    url: mysql://${MYSQLUSER}:${MYSQL_ROOT_PASSWORD}@${RAILWAY_PRIVATE_DOMAIN}:3306/${MYSQL_DATABASE}?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    username: ${MYSQLUSER}
+    password: ${MYSQL_ROOT_PASSWORD}
 
   jpa:
     open-in-view: false
